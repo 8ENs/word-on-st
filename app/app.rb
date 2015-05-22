@@ -6,8 +6,9 @@ module WordOnSt
 
     enable :sessions
 
+    # Homepage (Root path)
     get '/' do
-      "Hello World"
+      erb :index
     end
 
     ##

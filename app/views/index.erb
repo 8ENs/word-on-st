@@ -1,0 +1,14 @@
+<h1>Word on the Street</h1>
+
+<% if user_logged_in? %>
+  <p>Welcome <a href="/users/<%= session[:id] %>"><%= get_current_user.name %></a>
+    <a href="/logout">(logout)</a>
+  </p>
+<% else %>
+  <p>Hey stranger...you should either <a href="/login">login</a> or <a href="/users/register">register</a></p>
+<% end %>
+
+<hr/>
+<p><a href="/pins">View list of PINS...</a></p>
+
+<p><a href="/users">View list of USERS...</a></p>

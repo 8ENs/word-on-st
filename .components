@@ -1,0 +1,9 @@
+---
+:orm: mongoid
+:test: rspec
+:mock: none
+:script: jquery
+:renderer: erb
+:stylesheet: sass
+:namespace: WordOnSt
+:migration_format: number

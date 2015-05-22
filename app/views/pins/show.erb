@@ -1,0 +1,24 @@
+<h1><%= @pin.message %>
+  <!-- only display if url field exists -->
+  <% unless @pin.url.to_s.empty? %>
+    <a href="<%= @pin.url %>" target="_blank"><span style="font-size: 15px">(video)</span></a>
+  <% end %>
+</h1>
+
+<p>Location: <%= @pin.location %></p>
+
+<p>Recipient: <%= @pin.recipient %></p>
+
+<p>Pin dropped by: <a href="/users/<%= @pin.user_id %>"><%= @pin.user.name %></a></p>
+
+<p>
+  All pins dropped for <%= @pin.recipient %>: 
+  <ul>
+  <% Pin.where(recipient: @pin.recipient).each do |pins_for_same_recipient| %>
+    <li><a href="/pins/<%= pins_for_same_recipient.id %>"><%= pins_for_same_recipient.message %></a></li>
+  <% end %>
+  </ul>
+</p>
+
+<hr/>
+<a href="/pins">Back to all PINS</a>

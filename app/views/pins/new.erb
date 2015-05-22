@@ -1,0 +1,38 @@
+<h1>Drop new PIN</h1>
+<% if @pin.errors.any? %>
+  <div>
+    <strong>Some issues came up. Please fix them:</strong>
+    <ul>
+      <% @pin.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<form method="post" action="/pins">
+  <div>
+    <label>Message:</label>
+    <input type="text" name="message" value="<%= @pin.message%>">
+  </div>
+  <div>
+    <label>Location:</label>
+    <input type="text" name="location" value="<%= @pin.location %>">
+  </div>
+  <div>
+    <label>Recipient:</label>
+    <input type="text" name="recipient" value="<%= @pin.recipient %>">
+  </div>
+  <div>
+    <label>(url):</label>
+    <input type="text" name="url" value="<%= @pin.url %>">
+    <span>(optional)</span>
+  </div>
+
+  <div>
+    <input type="submit" value="Submit">
+  </div>
+</form>
+
+<hr/>
+<a href="/pins">Back to all PINS</a>

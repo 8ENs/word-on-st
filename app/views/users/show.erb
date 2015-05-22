@@ -1,0 +1,28 @@
+<h1><%= @user.name %></h1>
+
+<p>e: <%= @user.email %></p>
+
+<% if @user.name == session[:name] %>
+<p>p: <%= @user.password %> <i>(hide later?)</i></p>
+
+<p>
+  PINS dropped:
+  <ul>
+  <% Pin.where(user_id: @user.id).each do |pin| %>
+    <li><a href="/pins/<%= pin.id %>">@:<%= pin.location %> FOR:<%= pin.recipient %> on:<%= pin.created_at.strftime("%h %d (%r)") %></a></li>
+  <% end %>
+  </ul>
+</p>
+
+<p>
+  PINS received:
+  <ul>
+  <% Pin.where(recipient: get_current_user.name).each do |pin| %>
+    <li><a href="/pins/<%= pin.id %>">@:<%= pin.location %> FROM:<%= pin.user.name %> on:<%= pin.created_at.strftime("%h %d (%r)") %></a></li>
+  <% end %>
+  </ul>
+</p>
+<% end %>
+
+<hr/>
+<a href="/users">Back to all Users</a>

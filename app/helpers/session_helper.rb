@@ -8,7 +8,7 @@ module WordOnSt
       # end
 
       def user_logged_in?
-        session[:id]
+        session[:id].present?
       end
 
       def get_current_user

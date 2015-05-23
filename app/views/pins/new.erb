@@ -1,9 +1,11 @@
 <h1>Drop new PIN</h1>
-<% if @pin.errors.any? %>
-  <div>
+<hr/>
+
+<% if @new_pin.errors.any? %>
+  <div style="color: red">
     <strong>Some issues came up. Please fix them:</strong>
     <ul>
-      <% @pin.errors.full_messages.each do |message| %>
+      <% @new_pin.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>
@@ -13,26 +15,46 @@
 <form method="post" action="/pins">
   <div>
     <label>Message:</label>
-    <input type="text" name="message" value="<%= @pin.message%>">
+    <input type="text" name="message" placeholder="type note here" value="<%= @new_pin.message%>" required>
+    <span> (max: 140 characters)</span>
   </div>
   <div>
     <label>Location:</label>
-    <input type="text" name="location" value="<%= @pin.location %>">
+    <input type="text" name="location" placeholder="location" value="<%= @new_pin.location %>" required>
   </div>
   <div>
     <label>Recipient:</label>
-    <input type="text" name="recipient" value="<%= @pin.recipient %>">
+    <% @new_pin.recipient = User.find(@id).name if @id %>
+    <input type="text" name="recipient" placeholder="type 'Public' for all" value="<%= @new_pin.recipient %>" required>
+    <span><a href="/users">(see list of potential users)</a> <i>eventually make drop-down?</i></span
   </div>
   <div>
     <label>(url):</label>
-    <input type="text" name="url" value="<%= @pin.url %>">
+    <input type="text" name="url" placeholder="optional" value="<%= @new_pin.url %>">
     <span>(optional)</span>
   </div>
-
   <div>
     <input type="submit" value="Submit">
   </div>
 </form>
 
-<hr/>
-<a href="/pins">Back to all PINS</a>
+<% if user_logged_in? && @pins.present? %> <!-- Might not need this IF; can only get here via DROP (disabled if not logged in)...except direct URL -->
+  <hr/>
+  <p>
+    <h1>PINS you have dropped:</h1>
+    <div class="list-group">
+      <% @pins.each do |pin| %>
+        <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
+          <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
+            <h4 class="list-group-item-heading"><%= pin.message %></h4>
+            <p class="list-group-item-text">
+              <b>@: </b><%= pin.location %> 
+              <b>to:</b> <%= pin.recipient %> 
+              <b>on:</b>  <%= pin.created_at.strftime("%h %d @ %r") %>
+            </p>
+          </a>
+        <% end %>
+      <% end %>
+    </div>
+  </p>
+<% end %>

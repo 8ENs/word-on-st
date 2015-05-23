@@ -5,7 +5,7 @@ module WordOnSt
     register Padrino::Helpers
 
     enable :sessions
-    enable :reload
+    # enable :reload
 
     # Homepage (Root path)
     get '/' do

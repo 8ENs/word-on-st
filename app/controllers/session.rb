@@ -19,17 +19,17 @@ WordOnSt::App.controllers :session do
   #   'Hello world!'
   # end
 
-  get :index, map: 'login' do
+  get :index, map: '/login' do
     @user = User.new
     render 'login'
   end
 
-  get :logout, map: 'logout' do
+  get :logout do
     session.destroy
     redirect '/'
   end
 
-  post :login, map: 'login' do
+  post :login, map: '/login' do
     
     @user = User.find_by(email: params[:user_email], password: params[:user_password])
 

@@ -19,14 +19,14 @@ WordOnSt::App.controllers :users do
   #   'Hello world!'
   # end
 
-  get :index, map: 'users' do
+  get :index, map: '/users' do
     @users = User.all
     render 'users/index'
   end
 
-  get :show, map: 'users/:id' do
+  get :show, map: '/users/:id' do
     @user = User.find(params[:id])
-    render 'users/show'
+    render '/users/show'
   end
 
 end

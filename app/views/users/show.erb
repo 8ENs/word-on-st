@@ -1,28 +1,48 @@
-<h1><%= @user.name %></h1>
+<% if @user.present? %>
+  <h1><%= @user.name %></h1>
+  <hr/>
 
-<p>e: <%= @user.email %></p>
+  <p>e: <%= @user.email %></p>
 
-<% if @user.name == session[:name] %>
-  <p>p: <%= @user.password %> <i>(hide later?)</i></p>
+  <% if @user.name == session[:name] %>
+    <p>p: <%= @user.password %> <i>(hide later?)</i></p>
 
-  <p>
-    PINS dropped:
-    <ul>
-    <% Pin.where(user_id: @user.id).each do |pin| %>
-      <li><a href="/pins/<%= pin.id %>">@:<%= pin.location %> FOR:<%= pin.recipient %> on:<%= pin.created_at.strftime("%h %d (%r)") %></a></li>
-    <% end %>
-    </ul>
-  </p>
+    <h3>PINS dropped:</h3>
 
-  <p>
-    PINS received:
-    <ul>
-    <% Pin.where(recipient: get_current_user.name).each do |pin| %>
-      <li><a href="/pins/<%= pin.id %>">@:<%= pin.location %> FROM:<%= pin.user.name %> on:<%= pin.created_at.strftime("%h %d (%r)") %></a></li>
-    <% end %>
-    </ul>
-  </p>
+    <div class="list-group">
+      <% Pin.where(user_id: @user.id).each do |pin| %>
+        <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
+          <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
+            <h4 class="list-group-item-heading"><%= pin.message %></h4>
+            <p class="list-group-item-text">
+              <b>@: </b><%= pin.location %> 
+              <b>to:</b> <%= pin.recipient %> 
+              <b>on:</b>  <%= pin.created_at.strftime("%h %d @ %r") %>
+            </p>
+          </a>
+        <% end %>
+      <% end %>
+    </div>
+
+    <h3>PINS received:</h3>
+
+    <div class="list-group">
+      <% Pin.where(recipient: get_current_user.name).each do |pin| %>
+        <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
+          <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
+            <h4 class="list-group-item-heading"><%= pin.message %></h4>
+            <p class="list-group-item-text">
+              <b>@: </b><%= pin.location %> 
+              <b>to:</b> <%= pin.recipient %> 
+              <b>on:</b>  <%= pin.created_at.strftime("%h %d @ %r") %>
+            </p>
+          </a>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %> 
+    <hr/>
+    
+    <%= link_to "Drop a note for #{@user.name}", url_for(:pins, :for, id: @user.id) %>
+  <% end %>
 <% end %>
-
-<hr/>
-<a href="/users">Back to all Users</a>

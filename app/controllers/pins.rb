@@ -19,33 +19,47 @@ WordOnSt::App.controllers :pins do
   #   'Hello world!'
   # end
 
-  get :pins, map: 'pins' do
+  get :index, map: '/pins' do
     @pins = Pin.all
-    render 'pins/index'
+    render '/pins/index'
   end
 
-  get :pins, map: 'pins/new' do
-    @pin = Pin.new
-    render 'pins/new'
+  get :new, map: '/pins/new' do
+    @new_pin = Pin.new
+    @pins = Pin.where(user_id: session[:id])
+    render '/pins/new'
   end
 
-  get :show, map: 'pins/:id' do
+  get :for, map: '/pins/new/:id' do
+    @new_pin = Pin.new
+    @pins = Pin.where(user_id: session[:id])
+    @id = params[:id]
+    render '/pins/new'
+  end
+
+  get :show, map: '/pins/:id' do
     @pin = Pin.find(params[:id])
-    render 'pins/show'
+    render '/pins/show'
   end
 
-  post :pins, map: 'pins' do
-    @pin = Pin.new(
+  # maybe make locations its own model/controller once things get more complicated with geo/map/etc ?
+  # get :location, map: '/pins/location/:id' do
+  #   @pins = Pin.all
+  #   render '/pins/location'
+  # end
+
+  post :pins, map: '/pins' do
+    @new_pin = Pin.new(
       message:   params[:message],
       location:  params[:location],
       recipient:   params[:recipient],
       url:   params[:url]
     )
-    @pin.user_id = session[:id]
-    if @pin.save
-      redirect 'pins'
+    @new_pin.user_id = session[:id]
+    if @new_pin.save
+      redirect '/pins'
     else
-      render 'pins/new'
+      render '/pins/new'
     end
   end
   

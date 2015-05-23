@@ -19,12 +19,12 @@ WordOnSt::App.controllers :register do
   #   'Hello world!'
   # end
   
-  get :index, map: 'register' do
+  get :index, map: '/register' do
     @user = User.new
-    render 'register/index'
+    render '/register/index'
   end
 
-  post :register, map: 'register' do
+  post :register, map: '/register' do
     @user = User.new(
       name:   params[:user_name],
       email:  params[:user_email],
@@ -35,7 +35,7 @@ WordOnSt::App.controllers :register do
       session[:name] = @user.name
       redirect '/'
     else
-      render 'register/index'
+      render '/register/index'
     end
   end
 

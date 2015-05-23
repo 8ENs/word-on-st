@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name='csrf-token' content='<%= session[:csrf] %>'>
+<!-- <meta name='csrf-token' content='<%= session[:csrf] %>'> -->
   <!--
     normalize.css removes cross-browser differences in defaults, e.g.,
     differences in how form elements appear between Firefox and IE
@@ -17,11 +17,61 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascripts/application.js"></script>
 
-
-
   <title>Word on the Street</title>
 </head>
 <body>
+
+
+<!-- <nav class="navbar navbar-default"> -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <!-- <div class="navbar-header"> -->
+
+      <a class="navbar-brand" href="/">Word on the Street (click here for MAIN)</a>
+
+        <div class="navbar-text navbar-right">
+          <% if user_logged_in? %>
+            Signed in as <a href="/users/<%= session[:id] %>" class="navbar-link"><%= get_current_user.name %></a>
+            <a href="<%= url_for(:session, :logout) %>" class="btn btn-primary">logout</a>
+          <% else %>
+            <a href="/register">register</a>
+            <a href="<%= url_for(:session, :login) %>" class="btn btn-primary">login</a>
+          <% end %>
+        </div>
+
+      </a>
+    <!-- </div> -->
+  </div>
+</nav>
+
+<div class="container">
+  <img src="/images/default_map.jpg">
+  <hr/>
+
   <%= yield %>
+</div>
+<!-- <nav>
+<ul class="nav nav-pills nav-justified">
+  <li><a href="/users">USERS (later DROP)</a></li>
+  <li><a href="/pins"><li>EXPLORE</a></li>
+</ul>
+</nav> -->
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container">
+
+        <div class="navbar-text navbar-center">
+            <a href="/pins" class="btn btn-primary">EXPLORE</a>
+            <% if user_logged_in? %>
+              <a href="/pins/new" class="btn btn-primary">DROP</a>
+            <% else %>
+              <a href="/pins/new" class="btn btn-primary disabled">DROP</a>
+            <% end %>
+        </div>
+
+      </a>
+  </div>
+</nav>
+
 </body>
 </html>

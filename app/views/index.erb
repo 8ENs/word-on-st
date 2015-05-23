@@ -1,14 +1,13 @@
-<h1>Word on the Street</h1>
-
-<% if user_logged_in? %>
-  <p>Welcome <a href="/users/<%= session[:id] %>"><%= get_current_user.name %></a>
-    <a href="/logout">(logout)</a>
-  </p>
-<% else %>
-  <p>Hey stranger...you should either <a href="/login">login</a> or <a href="/register">register</a></p>
-<% end %>
+<h1>WELCOME</h1>
 
 <hr/>
-<p><a href="/pins">View list of PINS...</a></p>
 
-<p><a href="/users">View list of USERS...</a></p>
+<p>Click EXPLORE (button below) to view existing Pins</p>
+
+<p>While NOT logged in, you can only see messages destined for PUBLIC (viewing)</p>
+
+<p>(Eventually we'll mask the msg's and you'll only be able to read them once nearby)</p>
+
+<p>In order to DROP messages (button below) or read any which were privately sent to you, you must LOGIN (top right)</p>
+
+<p>We can add more instructions here later...</p>

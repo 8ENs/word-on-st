@@ -20,7 +20,9 @@ Mongoid::Config.sessions =
 # If you want to use a YML file for config, use this instead:
 #
 #   Mongoid.load!(File.join(Padrino.root, 'config', 'database.yml'), Padrino.env)
-#
+
+Mongoid.load!('config/mongoid.yml')
+
 # And add a config/database.yml file like this:
 #   development:
 #     sessions:

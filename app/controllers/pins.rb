@@ -37,6 +37,11 @@ WordOnSt::App.controllers :pins do
     render '/pins/new'
   end
 
+  get :destroy, map: '/pins/destroy/:id' do
+    Pin.find(params[:id]).destroy
+    redirect '/pins'
+  end
+
   get :show, map: '/pins/:id' do
     @pin = Pin.find(params[:id])
     render '/pins/show'

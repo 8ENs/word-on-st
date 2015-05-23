@@ -14,3 +14,8 @@
 </p>
 
 <p>On: <%= @pin.created_at.strftime("%h %d @ %r") %></p>
+
+<hr/>
+<% if @pin.recipient == session[:name] %>
+  <a href="<%= url_for(:pins, :destroy, id: @pin.id) %>" type="button" class="btn btn-danger">(delete pin)</a>
+<% end %>

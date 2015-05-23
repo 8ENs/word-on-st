@@ -6,7 +6,7 @@ vendor/gems/*
 .sass-cache/*
 db/*.db
 .*.sw*
-config/database.rb
+config/mongoid.yml
 .bundle
 /public/system/*
 rerun.txt

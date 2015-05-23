@@ -1,43 +1,44 @@
+<h1>List of Pins</h1>
+
 <% if session[:name] %>
 <a href="/pins/new">Drop new PIN...</a>
 <% end %>
 
-<% @pins.each do |pin| %>
-  <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
-    <div class="pin">
-      <h3>
-        <a href="/pins/<%= pin.id %>"><%= pin.message %></a> 
-        
-        <!-- only display if url field exists -->
-        <% unless pin.url.to_s.empty? %>
-          <a href="<%= pin.url %>" target="_blank"><span style="font-size: 12px">url</span></a>
-        <% end %>
-        
-        </br>
-        
-        <span style="font-size: 12px; color: orange">
-          dropped by 
-          <a href="/users/<%= pin.user_id %>">
-          <% if pin.user.name == session[:name] %>
-            *you*
-          <% else %>
-            <%= pin.user.name %>
-          <% end %>
-          </a>
-            @: <%= pin.location %> FOR:
-            <a href="/users/<%= User.where(name: pin.recipient).first.id %>">
-              <% if pin.recipient == session[:name] %>
-                *you*
-              <% else %>
-                <%= pin.recipient %>
-              <% end %>
-            </a>
-            ON: <%= pin.created_at.strftime("%h %d (%r)") %>
-        </span>
+<hr/>
 
-      </h3>
-    </div>
-  <% end %>
+<% if @pins.present? %>
+  <% @pins.each do |pin| %>
+    <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
+      <div class="pin">
+        <h3>
+          <%= link_to pin.message, url_for(:pins, :show, id: pin.id) %>
+          
+          <!-- only display if url field exists -->
+          <% unless pin.url.to_s.empty? %>
+            <a href="<%= pin.url %>" target="_blank"><span style="font-size: 12px">url</span></a>
+          <% end %>
+          
+          </br>
+
+          <span style="font-size: 12px; color: orange">
+            dropped by 
+
+            <% dropper_name = pin.user.name == session[:name] ? "*you*" : pin.user.name %>
+            <%= link_to dropper_name, url_for(:users, :show, id: pin.user.id) %>
+
+            @: <%= pin.location %>
+
+            FOR:
+            <% recipient_name = pin.recipient == session[:name] ? "*you*" : pin.recipient %>
+            <%= link_to recipient_name, url_for(:users, :show, id: User.where(name: pin.recipient).first.id) %>
+
+            ON: <%= pin.created_at.strftime("%h %d (%r)") %>
+          </span>
+
+        </h3>
+      </div>
+    <% end %>
+<% end %>
 <% end %>
 
 <hr/>

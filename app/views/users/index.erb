@@ -1,6 +1,8 @@
+<h1>List of users</h1>
+
 <% @users.each do |user| %>
   <div class="user">
-    <h3><a href="/users/<%= user.id %>"><%= user.name %></a> <small>(<%= user.email %>)</small>
+    <h3><%= link_to user.name, url_for(:users, :show, id: user.id) %> <small>(<%= user.email %>)</small>
     </h3>
   </div>
 <% end %>

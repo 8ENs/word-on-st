@@ -11,14 +11,14 @@
 
 <p>Pin dropped by: <a href="/users/<%= @pin.user_id %>"><%= @pin.user.name %></a></p>
 
-<p>
+<!-- <p>
   All pins dropped for <%= @pin.recipient %>: 
   <ul>
   <% Pin.where(recipient: @pin.recipient).each do |pins_for_same_recipient| %>
     <li><a href="/pins/<%= pins_for_same_recipient.id %>"><%= pins_for_same_recipient.message %></a></li>
   <% end %>
   </ul>
-</p>
+</p> -->
 
 <hr/>
 <a href="/pins">Back to all PINS</a>

@@ -1,0 +1,28 @@
+development:
+  sessions:
+    default:
+      database: word_on_st_development
+      hosts:
+        - localhost:27017
+
+  options:
+    raise_not_found_error: false
+
+production:
+  sessions:
+    default:
+      database: word_on_st_production
+      hosts:
+        - localhost:27017
+
+  options:
+    raise_not_found_error: false
+test:
+  sessions:
+    default:
+      database: word_on_st_test
+      hosts:
+        - localhost:27017
+
+  options:
+    raise_not_found_error: false

@@ -35,6 +35,7 @@ gem 'padrino', '0.12.5'
 
 ##### FROM OLD PACKAGE #####
 
-group :development, :test do
-  gem 'pry'
-end
+# group :development, :test do
+  # gem 'pry-padrino', require: 'pry'
+gem 'pry'
+# end

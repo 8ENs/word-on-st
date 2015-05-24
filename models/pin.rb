@@ -1,12 +1,16 @@
 class Pin
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
+  include Mongoid::Geospatial
 
   # field <name>, :type => <type>, :default => <value>
   field :message, :type => String
   field :location, :type => String
   field :recipient, :type => String
   field :url, :type => String
+  field :loc, :type => Point
+  # index( { location: Mongoid::GEO2D })
+
   belongs_to :user
 
   # You can define indexes on documents using the index macro:

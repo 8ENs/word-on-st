@@ -1,27 +1,24 @@
+
 WordOnSt::App.controllers :pins do
-  
-  # get :index, :map => '/foo/bar' do
-  #   session[:foo] = 'bar'
-  #   render 'index'
-  # end
+  # ANDREW"S RECOMMENDED MAPPINGS FOR CONTROLLERS
+  #
+  # get :index, map: '/pins'
+  # get :show, with: :id, map: '/pins/:id'
+  # get :new, map: '/pins/new'
+  # post :create, map: '/pins'
+  # get :edit, with: :id, map: '/pins/:id/edit'
+  # put :update, with: :id, map: '/pins/:id'
+  # delete :destroy, with: :id, map: '/pins/:id'
+  #
 
-  # get :sample, :map => '/sample/url', :provides => [:any, :js] do
-  #   case content_type
-  #     when :js then ...
-  #     else ...
-  # end
-
-  # get :foo, :with => :id do
-  #   'Maps to url '/foo/#{params[:id]}''
-  # end
-
-  # get '/example' do
-  #   'Hello world!'
-  # end
-
-  get :index, map: '/pins' do
+  get :index, map: '/pins', provides: [:html, :json] do
     @pins = Pin.all
-    render '/pins/index'
+    case content_type
+    when :html
+      render '/pins/index'
+    when :json
+      @pins.to_json
+    end
   end
 
   get :new, map: '/pins/new' do
@@ -57,6 +54,7 @@ WordOnSt::App.controllers :pins do
     @new_pin = Pin.new(
       message:   params[:message],
       location:  params[:location],
+      loc:  params[:loc],
       recipient:   params[:recipient],
       url:   params[:url]
     )

@@ -22,6 +22,10 @@
     <label>Location:</label>
     <input type="text" name="location" placeholder="location" value="<%= @new_pin.location %>" required>
   </div>
+    <div>
+    <label>loc:</label>
+    <input type="text" name="loc" placeholder="loc" value="<%= @new_pin.loc %>" required>
+  </div>
   <div>
     <label>Recipient:</label>
     <% @new_pin.recipient = User.find(@id).name if @id %>

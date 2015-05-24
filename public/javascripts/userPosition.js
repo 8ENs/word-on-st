@@ -12,7 +12,7 @@ $(document).ready(function() {
     });
   } else {
     // Print out a message to the user.
-    document.write('Your browser does not support GeoLocation :(');
+    document.write('Your browser does not support GeoLocation');
   }
 
 });
@@ -24,7 +24,7 @@ function showMap(lat, lon) {
 
   // Create the Map Options
   var mapOptions = {
-    zoom: 8,
+    zoom: 16,
     center: myLatLng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -36,6 +36,16 @@ function showMap(lat, lon) {
   var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      title: 'Found you!'
+      clickable: true,
+      title: 'TEST TITLE'
+  });
+
+  // Create an info box
+  var infowindow = new google.maps.InfoWindow({
+    content: marker.title
+  });
+  // Show info box on point click
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map, marker);
   });
 }

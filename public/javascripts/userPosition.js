@@ -12,7 +12,7 @@ $(document).ready(function() {
     });
   } else {
     // Print out a message to the user.
-    document.write('Your browser does not support GeoLocation');
+    document.write('Your browser does not support GeoLocation.  Do Better.');
   }
 
 });
@@ -37,6 +37,7 @@ function showMap(lat, lon) {
       position: myLatLng,
       map: map,
       clickable: true,
+      draggable: true,
       title: 'TEST TITLE'
   });
 

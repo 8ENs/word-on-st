@@ -14,3 +14,4 @@ pickle-email-*.html
 .project
 *.sassc
 .env
+/public/javascripts/code-for-moving.js

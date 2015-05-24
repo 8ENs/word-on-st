@@ -38,4 +38,5 @@ gem 'padrino', '0.12.5'
 # group :development, :test do
   # gem 'pry-padrino', require: 'pry'
 gem 'pry'
+gem 'mongoid-geospatial'
 # end

@@ -6,18 +6,17 @@ class Pin
 
   # field <name>, type: <type>, :default => <value>
   field :message, type: String
-  field :coordinates, type: Array
+  field :coordinates, type: Point
   field :recipient, type: String
   field :url, type: String
-  field :loc, type: Point
-
-  # geocoded_by :ip_address, latitude: :lat, longitude: :lon
-  # after_validation :geocode
-
+  index({ location: '2dsphere' })
   # index( { location: Mongoid::GEO2D })
   # index( { location: Mongo::GEO2D }, { min: -180, max: 180 })
-
   belongs_to :user
+
+  # OLD
+  # geocoded_by :ip_address, latitude: :lat, longitude: :lon
+  # after_validation :geocode
 
   # You can define indexes on documents using the index macro:
   # index :field <, :unique => true>

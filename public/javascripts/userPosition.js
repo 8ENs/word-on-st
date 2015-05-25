@@ -11,6 +11,23 @@ $(document).ready(function() {
       showMap(lat, lon);
       $("#currentLat").val(lat);
       $("#currentLon").val(lon);
+
+      //Do ajax only if something...
+      if(window.location.pathname == "/pins"){
+        $.ajax("/pins.json", 
+          {
+            method: "GET",
+            data: {long: lon, lat: lat}, 
+            success: function(data) {
+              //This is where you have to use the data
+              $.each(data, function(idx, pin){
+                //Add a pin to map
+                console.log(pin, pin.coordinates[0], pin.coordinates[1])
+              })
+            }
+          }
+        );
+      }
     });
   } else {
     // Print out a message to the user.

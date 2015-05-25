@@ -16,7 +16,7 @@ gem 'rake'
 # Component requirements
 gem 'sass'
 gem 'erubis', '~> 2.7.0'
-gem 'mongoid', '~>3.0.0'
+gem 'mongoid', '~>3.1.0'
 
 # Test requirements
 gem 'rspec', :group => 'test'

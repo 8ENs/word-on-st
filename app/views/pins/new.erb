@@ -13,18 +13,12 @@
 <% end %>
 
 <form method="post" action="/pins">
+  <input type="hidden" name="lat" id="currentLat" value="">
+  <input type="hidden" name="lon" id="currentLon" value="">
   <div>
     <label>Message:</label>
     <input type="text" name="message" placeholder="type note here" value="<%= @new_pin.message%>" required>
     <span> (max: 140 characters)</span>
-  </div>
-  <div>
-    <label>Location:</label>
-    <input type="text" name="location" placeholder="location" value="<%= @new_pin.location %>" required>
-  </div>
-    <div>
-    <label>loc:</label>
-    <input type="text" name="loc" placeholder="loc" value="<%= @new_pin.loc %>" required>
   </div>
   <div>
     <label>Recipient:</label>
@@ -32,27 +26,27 @@
     <input type="text" name="recipient" placeholder="type 'Public' for all" value="<%= @new_pin.recipient %>" required>
     <span><a href="/users">(see list of potential users)</a> <i>eventually make drop-down?</i></span
   </div>
-  <div>
+<!--   <div>
     <label>(url):</label>
     <input type="text" name="url" placeholder="optional" value="<%= @new_pin.url %>">
     <span>(optional)</span>
-  </div>
+  </div> -->
   <div>
     <input type="submit" value="Submit">
   </div>
 </form>
 
-<% if user_logged_in? && @pins.present? %> <!-- Might not need this IF; can only get here via DROP (disabled if not logged in)...except direct URL -->
+<% if user_logged_in? && @pins_sent.present? %> <!-- Might not need this IF; can only get here via DROP (disabled if not logged in)...except direct URL -->
   <hr/>
   <p>
     <h1>PINS you have dropped:</h1>
     <div class="list-group">
-      <% @pins.each do |pin| %>
+      <% @pins_sent.each do |pin| %>
         <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
           <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
             <h4 class="list-group-item-heading"><%= pin.message %></h4>
             <p class="list-group-item-text">
-              <b>@: </b><%= pin.location %> 
+              <b>@: </b><%= pin.coordinates %> 
               <b>to:</b> <%= pin.recipient %> 
               <b>on:</b>  <%= pin.created_at.strftime("%h %d @ %r") %>
             </p>

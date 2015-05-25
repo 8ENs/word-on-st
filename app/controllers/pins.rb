@@ -21,10 +21,18 @@ WordOnSt::App.controllers :pins do
     end
   end
 
-  get :new, map: '/pins/new' do
+  get :new, map: '/pins/new', provides: [:html, :json] do
     @new_pin = Pin.new
-    @pins = Pin.where(user_id: session[:id])
-    render '/pins/new'
+    @pins_sent = Pin.where(user_id: session[:id])
+
+    @pins = Pin.all
+    case content_type
+    when :html
+      
+      render '/pins/new'
+    when :json
+      @pins.to_json
+    end
   end
 
   get :for, map: '/pins/new/:id' do
@@ -53,12 +61,12 @@ WordOnSt::App.controllers :pins do
   post :pins, map: '/pins' do
     @new_pin = Pin.new(
       message:   params[:message],
-      location:  params[:location],
-      loc:  params[:loc],
+      coordinates:  [params[:lat].to_f,params[:lon].to_f],
       recipient:   params[:recipient],
-      url:   params[:url]
+      # url:   params[:url]
     )
     @new_pin.user_id = session[:id]
+
     if @new_pin.save
       redirect '/pins'
     else

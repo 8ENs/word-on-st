@@ -2,13 +2,18 @@ class Pin
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
   include Mongoid::Geospatial
+  include Geocoder::Model::Mongoid
 
-  # field <name>, :type => <type>, :default => <value>
-  field :message, :type => String
-  field :location, :type => String
-  field :recipient, :type => String
-  field :url, :type => String
-  field :loc, :type => Point
+  # field <name>, type: <type>, :default => <value>
+  field :message, type: String
+  field :coordinates, type: Array
+  field :recipient, type: String
+  field :url, type: String
+  field :loc, type: Point
+
+  # geocoded_by :ip_address, latitude: :lat, longitude: :lon
+  # after_validation :geocode
+
   # index( { location: Mongoid::GEO2D })
 
   belongs_to :user
@@ -19,9 +24,9 @@ class Pin
   # You can create a composite key in mongoid to replace the default id using the key macro:
   # key :field <, :another_field, :one_more ....>
 
-  validates :message, :location, :recipient, presence: true
+  validates :message, :recipient, presence: true
   validates :message, length: { maximum: 140 }
-  validate  :legit_url
+  # validate  :legit_url
   validate  :legit_recipient
 
   def legit_url
@@ -35,5 +40,9 @@ class Pin
     unless User.find_by(name: recipient).present? || recipient == ""
       errors.add(:recipient, "--- you must select a valid recipient (please see link below for full list)")
     end
+  end
+
+  def ip_address
+    request[:REMOTE_ADDR]
   end
 end

@@ -1,10 +1,9 @@
 
-
+<% if @here[0] %>
   <h1>List of Pins</h1>
   <hr/>
   <% if @pins.present? %>
     <div class="list-group">
-
       <% @pins.geo_near(@here).each do |pin| %> 
         <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
           <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
@@ -20,3 +19,6 @@
       <% end %>
     </div>
   <% end %>
+<% else %>
+  <p>Acquiring position...</p>
+<% end %>

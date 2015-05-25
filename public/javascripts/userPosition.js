@@ -74,4 +74,6 @@ function showMap(lat, lon) {
     $("#currentLat").val(event.latLng.A);
     $("#currentLon").val(event.latLng.F);
   });
+
+
 }

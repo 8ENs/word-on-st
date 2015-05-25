@@ -14,11 +14,13 @@ WordOnSt::App.controllers :pins do
   get :index, map: '/pins', provides: [:html, :json] do
     @pins = Pin.all
 
+    # @here = [ params[:lat], params[:lon] ]
+    @here = [60.71549959999999, -135.0489237]
+
     case content_type
     when :html
       render '/pins/index'
     when :json
-      @here = [ params[:lat].to_f, params[:lon].to_f ]
       @pins.to_json
     end
   end
@@ -61,7 +63,6 @@ WordOnSt::App.controllers :pins do
   # end
 
   post :pins, map: '/pins' do
-    binding.pry
     @new_pin = Pin.new(
       message:   params[:message],
       coordinates:  [ params[:lat], params[:lon] ],

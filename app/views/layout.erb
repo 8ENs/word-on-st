@@ -15,9 +15,6 @@
   <link rel="stylesheet" href="/stylesheets/application.css">
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <!-- <script src="/javascripts/modernizr.js"></script>
-  <script src="/javascripts/geoPosition.js"></script> -->
-
 
   <title>Word on the Street</title>
 </head>
@@ -49,26 +46,10 @@
   <div >
   
 </div>
+
   <div id="tripmeter" class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div id="map"></div>
-    </div>
-  
-    <div class="col-md-4">
-      <p>
-        Starting Location (lat, lon):<br/>
-        <span id="startLat">???</span>&deg;, <span id="startLon">???</span>&deg;
-      </p>
-      <p>
-        Current Location (lat, lon):<br/>
-        <span id="currentLat">???</span>&deg;, <span id="currentLon">???</span>&deg;
-      </p>
-      <p>
-        Distance from starting location:<br/>
-        <span id="distance">0</span> km
-      </p>
-      <p style="color: red">
-        I've just embedded the source files from <a href="http://www.html5rocks.com/en/tutorials/geolocation/trip_meter">this page</a> for now. It does keep watching so if you move there's relativity in position. If this works, we'll just need to capture the lat/lon and store in Mongo. Map on the left is a static/placeholder. It's also reloading on every hyperlink click which is overkill. Clean it up boys! 8)
     </div>
   </div>
 
@@ -99,8 +80,6 @@
   </div>
 </nav>
 
-
-<!-- <script src="geoPosition.js"></script> -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="/javascripts/userPosition.js"></script>
 </body>

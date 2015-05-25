@@ -7,9 +7,11 @@
       <% @pins.geo_near(@here).each do |pin| %> 
         <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
           <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
-            <h4 class="list-group-item-heading"><%= pin.message %></h4>
+            <h4 class="list-group-item-heading pin-name"><%= pin.message %></h4>
             <p class="list-group-item-text">
-              <b>@: </b> <%= pin.coordinates %> 
+              <b>@: </b> 
+              <span class="log"><%= pin.coordinates[0] %></span>
+              <span class="lat"><%= pin.coordinates[1] %></span>
               <b>to:</b> <%= pin.recipient %> 
               <b>on:</b> <%= pin.created_at.strftime("%h %d @ %r") %>
               <b>distance:</b> <%= pin.geo_near_distance %> 

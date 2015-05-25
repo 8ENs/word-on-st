@@ -13,21 +13,23 @@ $(document).ready(function() {
       $("#currentLon").val(lon);
 
       //Do ajax only if something...
-      if(window.location.pathname == "/pins"){
-        $.ajax("/pins.json", 
-          {
-            method: "GET",
-            data: {long: lon, lat: lat}, 
-            success: function(data) {
-              //This is where you have to use the data
-              $.each(data, function(idx, pin){
-                //Add a pin to map
-                console.log(pin, pin.coordinates[0], pin.coordinates[1])
-              })
-            }
-          }
-        );
-      }
+      // if(window.location.pathname == "/pins"){
+      //   $.ajax("/pins.json", 
+      //     {
+      //       method: "GET",
+      //       data: {long: lon, lat: lat}, 
+      //       success: function(data) {
+      //         //This is where you have to use the data
+      //         // var pins = []
+      //         $.each(data, function(idx, pin){
+      //           //Add a pin to map
+      //           console.log(pin, pin.coordinates[0], pin.coordinates[1])
+      //           // pins << pin
+      //         })
+      //       }
+      //     }
+      //   );
+      // }
     });
   } else {
     // Print out a message to the user.
@@ -63,19 +65,29 @@ function showMap(lat, lon) {
 
   // var pins = map.data.loadGeoJson('https://api.myjson.com/bins/36fm8');
 
-  var pins = [{"_id":"5562a19ad0ba3a3ae4000001","coordinates":[60.72004402309875,-135.0508548904907],"created_at":"2015-05-24T21:14:18-07:00","message":"Baked","recipient":"Ben","updated_at":"2015-05-24T21:14:18-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"},{"_id":"5562a1a5d0ba3a3ae4000002","coordinates":[60.71549959999999,-135.0489237],"created_at":"2015-05-24T21:14:29-07:00","message":"MakeIT","recipient":"Ben","updated_at":"2015-05-24T21:14:29-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"},{"_id":"5562a1c4d0ba3a3ae4000003","coordinates":[60.73737190278714,-135.0754416827392],"created_at":"2015-05-24T21:15:00-07:00","message":"YuKonstruct","recipient":"Public","updated_at":"2015-05-24T21:15:00-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"}];
+  // var pins = [{"_id":"5562a19ad0ba3a3ae4000001","coordinates":[60.72004402309875,-135.0508548904907],"created_at":"2015-05-24T21:14:18-07:00","message":"Baked","recipient":"Ben","updated_at":"2015-05-24T21:14:18-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"},{"_id":"5562a1a5d0ba3a3ae4000002","coordinates":[60.71549959999999,-135.0489237],"created_at":"2015-05-24T21:14:29-07:00","message":"MakeIT","recipient":"Ben","updated_at":"2015-05-24T21:14:29-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"},{"_id":"5562a1c4d0ba3a3ae4000003","coordinates":[60.73737190278714,-135.0754416827392],"created_at":"2015-05-24T21:15:00-07:00","message":"YuKonstruct","recipient":"Public","updated_at":"2015-05-24T21:15:00-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"}];
 
-  for (var x in pins) {
-    var pin = pins[x];
-    var location = new google.maps.LatLng(pin.coordinates[0], pin.coordinates[1]);
+
+  $.each($(".list-group-item"), function(idx, item){
+    var longitude = $(item).find(".log").text();
+    var latitude = $(item).find(".lat").text();
+    var location = new google.maps.LatLng(longitude, latitude);
     var marker = new google.maps.Marker({
       position: location,
-      title: pin.message,
+      title: $(item).find(".pin-name").text(),
+      distance: 0,
       map: map
+    });
   });
-  }
-
-  // var pins = [{"_id":"5562a19ad0ba3a3ae4000001","coordinates":[60.72004402309875,-135.0508548904907],"created_at":"2015-05-24T21:14:18-07:00","message":"Baked","recipient":"Ben","updated_at":"2015-05-24T21:14:18-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"},{"_id":"5562a1a5d0ba3a3ae4000002","coordinates":[60.71549959999999,-135.0489237],"created_at":"2015-05-24T21:14:29-07:00","message":"MakeIT","recipient":"Ben","updated_at":"2015-05-24T21:14:29-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"},{"_id":"5562a1c4d0ba3a3ae4000003","coordinates":[60.73737190278714,-135.0754416827392],"created_at":"2015-05-24T21:15:00-07:00","message":"YuKonstruct","recipient":"Public","updated_at":"2015-05-24T21:15:00-07:00","url":null,"user_id":"55623d2ed0ba3af89c000001"}]
+  // for (var x in pins) {
+  //   var pin = pins[x];
+  //   var location = new google.maps.LatLng(pin.coordinates[0], pin.coordinates[1]);
+  //   var marker = new google.maps.Marker({
+  //     position: location,
+  //     title: pin.message,
+  //     map: map
+  //   });
+  // }
 
   // $.getJSON("/pins.json", function(data){
   //    // loop  and add markers
@@ -98,5 +110,7 @@ function showMap(lat, lon) {
   });
 
   // Redirect to page WITH lat/lon
-  // window.location.replace("/pins?lon=" + lon + "&lat=" + lat);
+  if (window.location.search == "") {
+    window.location.replace("/pins?lon=" + lon + "&lat=" + lat);
+  }  
 }

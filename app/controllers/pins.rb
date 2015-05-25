@@ -14,8 +14,8 @@ WordOnSt::App.controllers :pins do
   get :index, map: '/pins', provides: [:html, :json] do
     @pins = Pin.all
 
-    # @here = [ params[:lat].to_f, params[:lon].to_f ]
-    @here = [60.71549959999999, -135.0489237]
+    @here = [ params[:lat].to_f, params[:lon].to_f ]
+    # @here = [60.71549959999999, -135.0489237]
 
     case content_type
     when :html

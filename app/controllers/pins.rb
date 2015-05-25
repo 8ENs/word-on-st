@@ -12,17 +12,15 @@ WordOnSt::App.controllers :pins do
   #
 
   get :index, map: '/pins', provides: [:html, :json] do
+    # @pins = Pin.where(recipient: User.find(session[:id]).name)
     @pins = Pin.all
-
     @here = [ params[:lat].to_f, params[:lon].to_f ]
 
     case content_type
     when :html
-      @here_old = @here
       render '/pins/index'
     when :json
       @pins.to_json
-      # render '/pins/index' if @here != @here_old
     end
   end
 
@@ -41,6 +39,7 @@ WordOnSt::App.controllers :pins do
     end
   end
 
+  # moving location dynamically not working for this one
   get :for, map: '/pins/new/:id' do
     @new_pin = Pin.new
     @pins = Pin.where(user_id: session[:id])

@@ -80,21 +80,25 @@ function showMap(lat, lon) {
     var latitude = $(item).find(".lat").text();
     var location = new google.maps.LatLng(longitude, latitude);
     
-    var ico = '/images/ylw-circle-lv.png'
-    if (window.location.pathname == "/pins") { ico = '/images/grn-circle-lv.png' }
-    else if (window.location.pathname == "/pins/new") { ico = '/images/red-circle-lv.png' }
+    var ico = '/images/red-pin.png'
+    if (window.location.pathname == "/pins") { ico = '/images/green-pin.png' }
+    // else if (window.location.pathname == "/pins/new") { ico = '/images/red-circle-lv.png' }
+
+    // var click = false;
+    // if ($(item).find(".dist").text().to_f) { click = true };
 
     var marker = new google.maps.Marker({
       position: location,
       title: $(item).find(".pin-name").text(),
-      distance: 0,
+      distance: $(item).find(".dist").text(),
+      from: $(item).find(".from").text(),
       clickable: true,
       map: map,
       icon: ico
     });
     // Create an info box
     var infowindow = new google.maps.InfoWindow({
-      content: marker.title
+      content: marker.from
     });
     // Show info box on point click
     google.maps.event.addListener(marker, 'click', function() {
@@ -115,6 +119,12 @@ function showMap(lat, lon) {
   //    // loop  and add markers
   //    map.data.loadGeoJson('/pins.json');
   // });
+
+  var styleArray = [{
+   featureType: "poi.business",
+   elementType: "labels",
+   stylers: [{ visibility: "off" }]
+  }];
 
   // Create an info box
   var infowindow = new google.maps.InfoWindow({

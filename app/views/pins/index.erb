@@ -1,26 +1,30 @@
 
-<% if @here[0] %>
-  <h1>List of Pins</h1>
+<% if @here[0] && @pins.present? %>
+  <% num_pins = @pins.where(recipient: session[:name]).count %>
+  <% num_pins += @pins.where(recipient: "Public").count if session[:name] != "Public" %>
+  <h1>List of Pins (<%= num_pins %>)</h1>
   <hr/>
-  <% if @pins.present? %>
-    <div class="list-group">
-      <% @pins.geo_near(@here).each do |pin| %> 
-        <% if pin.recipient == session[:name] || pin.recipient == "Public" %>
+  <div class="list-group">
+    <% @pins.geo_near(@here).each do |pin| %> 
+      <% if pin.recipient == session[:name] || pin.recipient == "Public" %>
+        <% if pin.geo_near_distance < 0.001 %>
           <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
-            <h4 class="list-group-item-heading pin-name"><%= pin.message %></h4>
-            <p class="list-group-item-text">
-              <b>@: </b> 
-              <span class="lon"><%= pin.coordinates[0] %></span>
-              <span class="lat"><%= pin.coordinates[1] %></span>
-              <span class="from"><b>from:</b> <%= pin.user.name %></span>
-              <span class="on"><b>on:</b> <%= pin.created_at.strftime("%h %d @ %r") %></span>
-              <span class="dist"><b>distance:</b> <%= pin.geo_near_distance.round(4) %></span>
-            </p>
-          </a>
+        <% else %>
+          <a class="list-group-item" style="display: none" href="<%= url_for(:pins, :show, id: pin.id) %>">
         <% end %>
+          <h4 class="list-group-item-heading pin-name"><%= pin.message %></h4>
+          <p class="list-group-item-text">
+            <b>@: </b> 
+            <span class="lon"><%= pin.coordinates[0] %></span>
+            <span class="lat"><%= pin.coordinates[1] %></span>
+            <span class="from"><b>from:</b> <%= pin.user.name %></span>
+            <span class="on"><b>on:</b> <%= pin.created_at.strftime("%h %d @ %r") %></span>
+            <span class="dist"><b>distance:</b> <%= pin.geo_near_distance.round(4) %></span>
+          </p>
+        </a>
       <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% else %>
   <p>Acquiring position...</p>
 <% end %>

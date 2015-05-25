@@ -1,7 +1,7 @@
 <h1><%= @pin.message %></h1>
 <hr/>
 
-<p>At: <%= @pin.location %></p>
+<p>At: <%= @pin.coordinates %></p>
 
 <p>For: 
   <% recipient_name = @pin.recipient == session[:name] ? "*you*" : @pin.recipient %>

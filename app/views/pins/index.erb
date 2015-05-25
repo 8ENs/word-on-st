@@ -3,7 +3,7 @@
 
 <% if @pins.present? %>
   <div class="list-group">
-    <% @pins.each do |pin| %>
+      <% @pins.each do |pin| %>
       <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
         <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
           <h4 class="list-group-item-heading"><%= pin.message %></h4>

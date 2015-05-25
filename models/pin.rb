@@ -2,7 +2,7 @@ class Pin
   include Mongoid::Document
   include Mongoid::Timestamps # adds created_at and updated_at fields
   include Mongoid::Geospatial
-  include Geocoder::Model::Mongoid
+  # include Geocoder::Model::Mongoid
 
   # field <name>, type: <type>, :default => <value>
   field :message, type: String
@@ -15,6 +15,7 @@ class Pin
   # after_validation :geocode
 
   # index( { location: Mongoid::GEO2D })
+  # index( { location: Mongo::GEO2D }, { min: -180, max: 180 })
 
   belongs_to :user
 

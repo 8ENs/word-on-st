@@ -8,7 +8,7 @@
     See: http://necolas.github.com/normalize.css/
   -->
   <!-- <link rel="stylesheet" href="/stylesheets/normalize.css"> -->
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
   <!--
     application.css is where you put your styles
   -->
@@ -22,34 +22,61 @@
 
 <!-- <nav class="navbar navbar-default"> -->
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
+  <div class="container-fluid">
     <!-- <div class="navbar-header"> -->
+      <p class="navbar-brand" style="padding-top: 20px"><strong>Word on the Street</strong></p>
+           <p class="navbar-brand">
+            <% if user_logged_in? %>
+              <a href="/pins" class="btn btn-success">EXPLORE</a>
+              <a href="/pins/new" class="btn btn-success">DROP</a>
+            <% else %>
+              <a href="/pins" class="btn btn-success disabled">EXPLORE</a>
+              <a href="/pins/new" class="btn btn-success disabled">DROP</a>
+            <% end %>
+            </p>
+        <form class="navbar-form navbar-right" method="post" action="/login">
+          <div class="form-group">
+            <div class="nav navbar-right">
+            <% if session[:id] %>
+              <p>Welcome <%= "#{session[:name]}" %>
+              <a href="<%= url_for(:session, :logout) %>" 
+               class="btn btn-primary">logout</a></p>
+            <% else %>
+            <input type="text" placeholder="Email" class="form-control" name="user_email">
+            <input type="password" placeholder="Password" class="form-control" name="user_password">
+          <button type="submit" class="btn btn-success" value="Submit">Sign in</button>
+          </div>
+        </form>
+        <% end %>
 
-      <a class="navbar-brand" href="/">Word on the Street</a>
 
-        <div class="navbar-text navbar-right">
-          <% if user_logged_in? %>
-            Signed in as <a href="/users/<%= session[:id] %>" class="navbar-link"><%= get_current_user.name %></a>
-            <a href="<%= url_for(:session, :logout) %>" class="btn btn-primary">logout</a>
-          <% else %>
-            <a href="/register">register</a>
-            <a href="<%= url_for(:session, :login) %>" class="btn btn-primary">login</a>
-          <% end %>
-        </div>
+    
 
       </a>
     <!-- </div> -->
   </div>
 </nav>
 
-<div class="container">
-  <div >
-  
+<% unless user_logged_in? %>
+<div class="jumbotron">
+  <img src="http://i61.tinypic.com/6hja7n.jpg" border="0" class="img-responsive" id="img-centred">
+  <br><br>
+  <h1 class="centre">Welcome!</h1>
+  <p class="centre">Please sign up or login to get started.</p>
+  <br><br>
+  <a href="/register" class="btn btn-lg btn-primary" role="button">REGISTER AN ACCOUNT</a>
+
 </div>
+<% end %>
+
+<div class="container">
 
   <div class="row">
     <div class="col-md-12">
+    <% if user_logged_in? %>
       <div id="map"></div>
+      <% else %>
+      <% end %>
     </div>
   </div>
 
@@ -64,24 +91,10 @@
 </ul>
 </nav> -->
 
-<nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container">
-
-        <div class="navbar-text navbar-center">
-            <% if user_logged_in? %>
-              <a href="/pins" class="btn btn-primary">EXPLORE</a>
-              <a href="/pins/new" class="btn btn-primary">DROP</a>
-            <% else %>
-              <a href="/pins" class="btn btn-primary disabled">EXPLORE</a>
-              <a href="/pins/new" class="btn btn-primary disabled">DROP</a>
-            <% end %>
-        </div>
-
-      </a>
-  </div>
-</nav>
 
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="/javascripts/userPosition.js"></script>
+<script src="/javascripts/bootstrap.js"></script>
+<script src="/javascripts/application.js"></script>
 </body>
 </html>

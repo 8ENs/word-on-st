@@ -1,8 +1,46 @@
-body { padding-top: 70px; }
-body { padding-bottom: 70px; }
+body { 
+  padding-top: 70px; 
+  padding-bottom: 70px;
+  background-color: #E4F4FF;
+  }
 
 #tripmeter { margin-top: 10px; margin-bottom: 10px; }
 #tripmeter p { color: #222; font: 14px Arial; }
 #tripmeter span { color: #00C; }
 
-#map { height: 300px; width: 650px;}
+#map { 
+  height: 500px;
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.centre {
+  text-align: center;
+}
+
+.img-centre {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.word-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -40px;
+}
+
+#img-centred {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -40px;
+}
+
+#form-middle {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

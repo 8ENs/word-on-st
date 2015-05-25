@@ -13,7 +13,7 @@ if (window.location.search == "") {
 
         if (window.location.pathname == "/pins") {window.location.replace("/pins?lon=" + lon + "&lat=" + lat);}
         else if (window.location.pathname == "/pins/new") {window.location.replace("/pins/new?lon=" + lon + "&lat=" + lat);}
-        else if (window.location.pathname == "/") {window.location.replace("/?lon=" + lon + "&lat=" + lat);}
+        else if (window.location.pathname == "/") {}
         else if (window.location.pathname == "/login") {window.location.replace("/login?lon=" + lon + "&lat=" + lat);}
         else if (window.location.pathname == "/register") {window.location.replace("/register?lon=" + lon + "&lat=" + lat);}
         else {window.location.replace(window.location.pathname + "?lon=" + lon + "&lat=" + lat);}
@@ -142,7 +142,7 @@ function showMap(lat, lon) {
     // showMap(event.latLng.A, event.latLng.F);
     if (window.location.pathname == "/pins") {window.location.replace("/pins?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
     else if (window.location.pathname == "/pins/new") {window.location.replace("/pins/new?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
-    else if (window.location.pathname == "/") {window.location.replace("/?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
+    // else if (window.location.pathname == "/") {window.location.replace("/?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
     else if (window.location.pathname == "/login") {window.location.replace("/login?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
     else if (window.location.pathname == "/register") {window.location.replace("/register?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
     // else {window.location.replace(window.location.pathname + "?lon=" + lon + "&lat=" + lat);}

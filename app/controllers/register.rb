@@ -33,7 +33,7 @@ WordOnSt::App.controllers :register do
     if @user.save
       session[:id] = @user.id
       session[:name] = @user.name
-      redirect '/'
+      redirect '/pins'
     else
       render '/register/index'
     end

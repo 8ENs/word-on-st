@@ -17,14 +17,17 @@
   <input type="hidden" name="lon" id="currentLon" value="">
   <div>
     <label>Message:</label>
-    <input type="text" name="message" placeholder="type note here" value="<%= @new_pin.message%>" required>
+    <input type="text" name="message" placeholder="type note here" value="<%= @new_pin.message%>" required="true">
     <span> (max: 140 characters)</span>
   </div>
   <div>
     <label>Recipient:</label>
     <% @new_pin.recipient = User.find(@id).name if @id %>
-    <input type="text" name="recipient" placeholder="type 'Public' for all" value="<%= @new_pin.recipient %>" required>
-    <span><a href="/users">(see list of potential users)</a> <i>eventually make drop-down?</i></span
+    <input type="text" name="recipient" placeholder="type 'Public' for all" value="<%= @new_pin.recipient %>" required="true">
+    <span>
+      <a href="/users">(see list of potential users)</a> 
+      <i>eventually make drop-down?</i>
+    </span>
   </div>
 <!--   <div>
     <label>(url):</label>

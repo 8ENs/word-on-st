@@ -1,4 +1,3 @@
-
 WordOnSt::App.controllers :pins do
   # ANDREW"S RECOMMENDED MAPPINGS FOR CONTROLLERS
   #

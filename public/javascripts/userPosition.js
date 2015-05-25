@@ -9,6 +9,8 @@ $(document).ready(function() {
 
       // Show the map
       showMap(lat, lon);
+      $("#currentLat").val(lat);
+      $("#currentLon").val(lon);
     });
   } else {
     // Print out a message to the user.
@@ -38,7 +40,7 @@ function showMap(lat, lon) {
       map: map,
       clickable: true,
       draggable: true,
-      title: 'TEST TITLE'
+      title: 'YOUR LOCATION'
   });
 
   // Create an info box
@@ -48,5 +50,11 @@ function showMap(lat, lon) {
   // Show info box on point click
   google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map, marker);
+  });
+
+  // Update coordinates on marker
+  google.maps.event.addListener(marker, 'dragend', function(event) {
+    $("#currentLat").val(event.latLng.A);
+    $("#currentLon").val(event.latLng.F);
   });
 }

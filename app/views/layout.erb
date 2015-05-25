@@ -68,10 +68,11 @@
   <div class="container">
 
         <div class="navbar-text navbar-center">
-            <a href="/pins" class="btn btn-primary">EXPLORE</a>
             <% if user_logged_in? %>
+              <a href="/pins" class="btn btn-primary">EXPLORE</a>
               <a href="/pins/new" class="btn btn-primary">DROP</a>
             <% else %>
+              <a href="/pins" class="btn btn-primary disabled">EXPLORE</a>
               <a href="/pins/new" class="btn btn-primary disabled">DROP</a>
             <% end %>
         </div>

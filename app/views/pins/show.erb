@@ -1,19 +1,24 @@
 <h1><%= @pin.message %></h1>
 <hr/>
 
-<p>At: <%= @pin.coordinates %></p>
-
-<p>For: 
-  <% recipient_name = @pin.recipient == session[:name] ? "*you*" : @pin.recipient %>
-  <%= link_to recipient_name, url_for(:users, :show, id: User.where(name: @pin.recipient).first.id) %>
-</p>
-
-<p>By: 
-  <% dropper_name = @pin.user.name == session[:name] ? "*you*" : @pin.user.name %>
-  <%= link_to dropper_name, url_for(:users, :show, id: @pin.user.id) %>
-</p>
-
-<p>On: <%= @pin.created_at.strftime("%h %d @ %r") %></p>
+<div class="list-group">
+  <div class="list-group-item">
+    <h4 class="list-group-item-heading pin-name"><%= @pin.message %></h4>
+    <p class="list-group-item-text">
+      <span class="lon"><%= @pin.coordinates[0] %></span>
+      <span class="lat"><%= @pin.coordinates[1] %></span>
+      <span class="to"><b>to:</b>
+        <% recipient_name = @pin.recipient == session[:name] ? "*you*" : @pin.recipient %>
+        <%= link_to recipient_name, url_for(:users, :show, id: User.where(name: @pin.recipient).first.id) %>
+      </span>
+      <span class="from"><b>from:</b>
+        <% dropper_name = @pin.user.name == session[:name] ? "*you*" : @pin.user.name %>
+        <%= link_to dropper_name, url_for(:users, :show, id: @pin.user.id) %>
+      </span>
+      <span class="on"><b>on:</b> <%= @pin.created_at.strftime("%h %d @ %r") %></span>
+    </p>
+  </div>
+</a>
 
 <hr/>
 <% if @pin.recipient == session[:name] %>

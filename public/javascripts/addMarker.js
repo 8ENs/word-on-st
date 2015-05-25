@@ -16,7 +16,6 @@ $(document).ready(function() {
   }
 
   // Go to http://127.0.0.1:3000/pins.json || $(window).location + ".json" and loop through the results (which would be your pins)
-
 });
 
 // Show the user's position on a Google map.

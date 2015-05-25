@@ -37,7 +37,7 @@ WordOnSt::App.controllers :session do
       # authenticate
       session[:id] = @user.id
       session[:name] = @user.name
-      redirect '/'
+      redirect '/pins'
     else
       @user = User.new
       @user.errors[:email] << "Login failed. Please try again."

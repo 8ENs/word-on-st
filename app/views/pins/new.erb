@@ -41,14 +41,16 @@
   <p>
     <h1>PINS you have dropped:</h1>
     <div class="list-group">
-      <% @pins_sent.each do |pin| %>
+      <% @pins.geo_near(@here).each do |pin| %> 
         <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
           <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
-            <h4 class="list-group-item-heading"><%= pin.message %></h4>
+            <h4 class="list-group-item-heading pin-name"><%= pin.message %></h4>
             <p class="list-group-item-text">
-              <b>@: </b><%= pin.coordinates %> 
-              <b>to:</b> <%= pin.recipient %> 
-              <b>on:</b>  <%= pin.created_at.strftime("%h %d @ %r") %>
+              <span class="lon"><%= pin.coordinates[0] %></span>
+              <span class="lat"><%= pin.coordinates[1] %></span>
+              <span class="to"><b>to:</b> <%= pin.recipient %></span>
+              <span class="on"><b>on:</b> <%= pin.created_at.strftime("%h %d @ %r") %></span>
+              <span class="dist"><b>distance:</b> <%= pin.geo_near_distance.round(4) %></span>
             </p>
           </a>
         <% end %>

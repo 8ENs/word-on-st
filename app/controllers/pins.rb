@@ -15,19 +15,22 @@ WordOnSt::App.controllers :pins do
     @pins = Pin.all
 
     @here = [ params[:lat].to_f, params[:lon].to_f ]
-    # @here = [60.71549959999999, -135.0489237]
 
     case content_type
     when :html
+      @here_old = @here
       render '/pins/index'
     when :json
       @pins.to_json
+      # render '/pins/index' if @here != @here_old
     end
   end
 
   get :new, map: '/pins/new', provides: [:html, :json] do
     @new_pin = Pin.new
     @pins_sent = Pin.where(user_id: session[:id])
+
+    @here = [ params[:lat].to_f, params[:lon].to_f ]
 
     @pins = Pin.all
     case content_type

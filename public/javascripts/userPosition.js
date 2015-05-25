@@ -1,45 +1,62 @@
-$(document).ready(function() {
+if (window.location.search == "" && (window.location.pathname == "/pins" || window.location.pathname == "/pins/new")) {
+  $(document).ready(function() {
 
-  // Check to see if the browser supports the GeoLocation API.
-  if (navigator.geolocation) {
-    // Get the location
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var lat = position.coords.latitude;
-      var lon = position.coords.longitude;
+    // Check to see if the browser supports the GeoLocation API.
+    if (navigator.geolocation) {
+      // Get the location
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var lat = position.coords.latitude;
+        var lon = position.coords.longitude;
 
-      // Show the map
-      showMap(lat, lon);
-      $("#currentLat").val(lat);
-      $("#currentLon").val(lon);
+        // Show the map
+        // showMap(lat, lon);
+        $("#currentLat").val(lat);
+        $("#currentLon").val(lon);
 
-      //Do ajax only if something...
-      // if(window.location.pathname == "/pins"){
-      //   $.ajax("/pins.json", 
-      //     {
-      //       method: "GET",
-      //       data: {long: lon, lat: lat}, 
-      //       success: function(data) {
-      //         //This is where you have to use the data
-      //         // var pins = []
-      //         $.each(data, function(idx, pin){
-      //           //Add a pin to map
-      //           console.log(pin, pin.coordinates[0], pin.coordinates[1])
-      //           // pins << pin
-      //         })
-      //       }
-      //     }
-      //   );
-      // }
-    });
-  } else {
-    // Print out a message to the user.
-    document.write('Your browser does not support GeoLocation.  Do Better.');
-  }
+        //Do ajax only if something...
+        // if(window.location.pathname == "/pins"){
+        //   $.ajax("/pins.json", 
+        //     {
+        //       method: "GET",
+        //       data: {long: lon, lat: lat}, 
+        //       success: function(data) {
+        //         //This is where you have to use the data
+        //         // var pins = []
+        //         $.each(data, function(idx, pin){
+        //           //Add a pin to map
+        //           console.log(pin, pin.coordinates[0], pin.coordinates[1])
+        //           // pins << pin
+        //         })
+        //       }
+        //     }
+        //   );
+        // }
+        // showMap(lat, lon);
+        if (window.location.pathname == "/pins") {window.location.replace("/pins?lon=" + lon + "&lat=" + lat);}
+        else {window.location.replace("/pins/new?lon=" + lon + "&lat=" + lat);}
+      });
+    } else {
+      // Print out a message to the user.
+      document.write('Your browser does not support GeoLocation.  Do Better.');
+    }
 
-});
+  });
+} else {
+  var search = window.location.search;
+  var parts = search.split('&');
+  var a = parts[0].split('=');
+  var b = parts[1].split('=');
+  var lon = a[1];
+  var lat = b[1];
+  showMap(lat, lon);
+
+}
 
 // Show the user's position on a Google map.
 function showMap(lat, lon) {
+  $("#currentLat").val(lat);
+  $("#currentLon").val(lon);
+
   // Create a LatLng object with the GPS coordinates.
   var myLatLng = new google.maps.LatLng(lat, lon);
 
@@ -59,7 +76,7 @@ function showMap(lat, lon) {
       map: map,
       clickable: true,
       draggable: true,
-      title: 'YOUR LOCATION',
+      title: 'Your Location',
       icon: '/images/blue_dot.png'
   });
 
@@ -69,14 +86,23 @@ function showMap(lat, lon) {
 
 
   $.each($(".list-group-item"), function(idx, item){
-    var longitude = $(item).find(".log").text();
+    var longitude = $(item).find(".lon").text();
     var latitude = $(item).find(".lat").text();
     var location = new google.maps.LatLng(longitude, latitude);
     var marker = new google.maps.Marker({
       position: location,
       title: $(item).find(".pin-name").text(),
       distance: 0,
+      clickable: true,
       map: map
+    });
+    // Create an info box
+    var infowindow = new google.maps.InfoWindow({
+      content: marker.title
+    });
+    // Show info box on point click
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.open(map, marker);
     });
   });
   // for (var x in pins) {
@@ -107,10 +133,13 @@ function showMap(lat, lon) {
   google.maps.event.addListener(marker, 'dragend', function(event) {
     $("#currentLat").val(event.latLng.A);
     $("#currentLon").val(event.latLng.F);
+    // showMap(event.latLng.A, event.latLng.F);
+    if (window.location.pathname == "/pins") {window.location.replace("/pins?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
+    else {window.location.replace("/pins/new?lon=" + event.latLng.F + "&lat=" + event.latLng.A);}
   });
 
   // Redirect to page WITH lat/lon
-  if (window.location.search == "") {
-    window.location.replace("/pins?lon=" + lon + "&lat=" + lat);
-  }  
+  // if (window.location.search == "" && window.location.pathname == "/pins") {
+  //   window.location.replace("/pins?lon=" + lon + "&lat=" + lat);
+  // }
 }

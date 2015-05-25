@@ -23,37 +23,35 @@
 <!-- <nav class="navbar navbar-default"> -->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
-    <!-- <div class="navbar-header"> -->
-      <p class="navbar-brand" style="padding-top: 20px"><strong>Word on the Street</strong></p>
-           <p class="navbar-brand">
-            <% if user_logged_in? %>
-              <a href="/pins" class="btn btn-success">EXPLORE</a>
-              <a href="/pins/new" class="btn btn-success">DROP</a>
-            <% else %>
-              <a href="/pins" class="btn btn-success disabled">EXPLORE</a>
-              <a href="/pins/new" class="btn btn-success disabled">DROP</a>
-            <% end %>
-            </p>
-        <form class="navbar-form navbar-right" method="post" action="/login">
-          <div class="form-group">
-            <div class="nav navbar-right">
-            <% if session[:id] %>
-              <p>Welcome <%= "#{session[:name]}" %>
-              <a href="<%= url_for(:session, :logout) %>" 
-               class="btn btn-primary">logout</a></p>
-            <% else %>
+    <p class="navbar-brand" style="padding-top: 20px">
+      <strong>Word on the Street</strong>
+    </p>
+    <p class="navbar-brand">
+      <% if user_logged_in? %>
+        <a href="/pins" class="btn btn-success">EXPLORE</a>
+        <a href="/pins/new" class="btn btn-success">DROP</a>
+      <% else %>
+        <a href="/pins" class="btn btn-success disabled">EXPLORE</a>
+        <a href="/pins/new" class="btn btn-success disabled">DROP</a>
+      <% end %>
+    </p>
+  
+    <div class="form-group">
+      <div class="nav navbar-right">
+        <% if session[:id] %>
+          <p>
+            Welcome <%= "#{session[:name]}" %>
+            <a href="<%= url_for(:session, :logout) %>" class="btn btn-primary">logout</a>
+          </p>
+        <% else %>
+          <form class="navbar-form navbar-right" method="post" action="/login">
             <input type="text" placeholder="Email" class="form-control" name="user_email">
             <input type="password" placeholder="Password" class="form-control" name="user_password">
-          <button type="submit" class="btn btn-success" value="Submit">Sign in</button>
-          </div>
-        </form>
+            <button type="submit" class="btn btn-success" value="Submit">Sign in</button>
+          </form>
         <% end %>
-
-
-    
-
-      </a>
-    <!-- </div> -->
+      </div>
+    </div>
   </div>
 </nav>
 

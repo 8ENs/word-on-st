@@ -24,22 +24,6 @@
       <% end %>
     </div>
 
-    <!-- <h3>PINS received:</h3>
-
-    <div class="list-group">
-      <% Pin.where(recipient: get_current_user.name).each do |pin| %>
-        <% if pin.user.name == session[:name] || pin.recipient == session[:name] || pin.recipient == "Public" %>
-          <a class="list-group-item" href="<%= url_for(:pins, :show, id: pin.id) %>">
-            <h4 class="list-group-item-heading"><%= pin.message %></h4>
-            <p class="list-group-item-text">
-              <b>@: </b><%= pin.coordinates %> 
-              <b>to:</b> <%= pin.recipient %> 
-              <b>on:</b>  <%= pin.created_at.strftime("%h %d @ %r") %>
-            </p>
-          </a>
-        <% end %>
-      <% end %>
-    </div> -->
   <% else %> 
     <hr/>
     

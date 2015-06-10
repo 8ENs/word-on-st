@@ -3,9 +3,7 @@
 module WordOnSt
   class App
     module RegisterHelper
-      # def simple_helper_method
-      # ...
-      # end
+
     end
 
     helpers RegisterHelper

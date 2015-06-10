@@ -1,9 +1,6 @@
 WordOnSt::App.controllers :pins do
   # ANDREW"S RECOMMENDED MAPPINGS FOR CONTROLLERS
   #
-  # get :index, map: '/pins'
-  # get :show, with: :id, map: '/pins/:id'
-  # get :new, map: '/pins/new'
   # post :create, map: '/pins'
   # get :edit, with: :id, map: '/pins/:id/edit'
   # put :update, with: :id, map: '/pins/:id'
@@ -56,13 +53,7 @@ WordOnSt::App.controllers :pins do
     render '/pins/show'
   end
 
-  # maybe make locations its own model/controller once things get more complicated with geo/map/etc ?
-  # get :location, map: '/pins/location/:id' do
-  #   @pins = Pin.all
-  #   render '/pins/location'
-  # end
-
-  post :pins, map: '/pins' do
+  post :create, map: '/pins' do
     @new_pin = Pin.new(
       message:   params[:message],
       coordinates:  [ params[:lat], params[:lon] ],

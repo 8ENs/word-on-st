@@ -3,9 +3,6 @@
 module WordOnSt
   class App
     module SessionHelper
-      # def simple_helper_method
-      # ...
-      # end
 
       def user_logged_in?
         session[:id].present?

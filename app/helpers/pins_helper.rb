@@ -3,9 +3,7 @@
 module WordOnSt
   class App
     module PinsHelper
-      # def simple_helper_method
-      # ...
-      # end
+
     end
 
     helpers PinsHelper

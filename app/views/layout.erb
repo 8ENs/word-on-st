@@ -1,98 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- <meta name='csrf-token' content='<%= session[:csrf] %>'> -->
+  <!-- <meta name='csrf-token' content='<%= session[:csrf] %>'> -->
+  
   <!--
     normalize.css removes cross-browser differences in defaults, e.g.,
     differences in how form elements appear between Firefox and IE
     See: http://necolas.github.com/normalize.css/
   -->
   <!-- <link rel="stylesheet" href="/stylesheets/normalize.css"> -->
-  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
-  <!--
-    application.css is where you put your styles
-  -->
-  <link rel="stylesheet" href="/stylesheets/application.css">
 
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/application.css">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
   <title>Word on the Street</title>
 </head>
 <body>
-
-<!-- <nav class="navbar navbar-default"> -->
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <p class="navbar-brand" style="padding-top: 20px">
-      <strong>Word on the Street</strong>
-    </p>
-    <p class="navbar-brand">
-      <% if user_logged_in? %>
-        <a href="/pins" class="btn btn-success">EXPLORE</a>
-        <a href="/pins/new" class="btn btn-success">DROP</a>
-      <% else %>
-        <a href="/pins" class="btn btn-success disabled">EXPLORE</a>
-        <a href="/pins/new" class="btn btn-success disabled">DROP</a>
-      <% end %>
-    </p>
-  
-    <div class="form-group">
-      <div class="nav navbar-right">
-        <% if session[:id] %>
-          <p>
-            Welcome <%= "#{session[:name]}" %>
-            <a href="<%= url_for(:session, :logout) %>" class="btn btn-primary">logout</a>
-          </p>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <p class="navbar-brand" style="padding-top: 20px">
+        <strong>Word on the Street</strong>
+      </p>
+      <p class="navbar-brand">
+        <% if user_logged_in? %>
+          <a href="/pins" class="btn btn-success">EXPLORE</a>
+          <a href="/pins/new" class="btn btn-success">DROP</a>
         <% else %>
-          <form class="navbar-form navbar-right" method="post" action="/login">
-            <input type="text" placeholder="Email" class="form-control" name="user_email">
-            <input type="password" placeholder="Password" class="form-control" name="user_password">
-            <button type="submit" class="btn btn-success" value="Submit">Sign in</button>
-          </form>
+          <a href="/pins" class="btn btn-success disabled">EXPLORE</a>
+          <a href="/pins/new" class="btn btn-success disabled">DROP</a>
+        <% end %>
+      </p>
+    
+      <div class="form-group">
+        <div class="nav navbar-right">
+          <% if session[:id] %>
+            <p>
+              Welcome <%= "#{session[:name]}" %>
+              <a href="<%= url_for(:session, :logout) %>" class="btn btn-primary">logout</a>
+            </p>
+          <% else %>
+            <form class="navbar-form navbar-right" method="post" action="/login">
+              <input type="text" placeholder="Email" class="form-control" name="user_email">
+              <input type="password" placeholder="Password" class="form-control" name="user_password">
+              <button type="submit" class="btn btn-success" value="Submit">Sign in</button>
+            </form>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <% unless user_logged_in? %>
+    <div class="jumbotron">
+      <img src="http://i61.tinypic.com/6hja7n.jpg" border="0" class="img-responsive" id="img-centred">
+      <br><br>
+      <h1 class="centre">Welcome!</h1>
+      <p class="centre">Please sign up or login to get started.</p>
+      <br><br>
+      <a href="/register" class="btn btn-lg btn-primary" role="button">REGISTER AN ACCOUNT</a>
+    </div>
+  <% end %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+      <% if user_logged_in? %>
+        <div id="map"></div>
+        <% else %>
         <% end %>
       </div>
     </div>
-  </div>
-</nav>
 
-<% unless user_logged_in? %>
-<div class="jumbotron">
-  <img src="http://i61.tinypic.com/6hja7n.jpg" border="0" class="img-responsive" id="img-centred">
-  <br><br>
-  <h1 class="centre">Welcome!</h1>
-  <p class="centre">Please sign up or login to get started.</p>
-  <br><br>
-  <a href="/register" class="btn btn-lg btn-primary" role="button">REGISTER AN ACCOUNT</a>
+    <hr/>
 
-</div>
-<% end %>
+    <%= yield %>
 
-<div class="container">
-
-  <div class="row">
-    <div class="col-md-12">
-    <% if user_logged_in? %>
-      <div id="map"></div>
-      <% else %>
-      <% end %>
-    </div>
   </div>
 
-  <hr/>
-
-  <%= yield %>
-</div>
-<!-- <nav>
-<ul class="nav nav-pills nav-justified">
-  <li><a href="/users">USERS (later DROP)</a></li>
-  <li><a href="/pins"><li>EXPLORE</a></li>
-</ul>
-</nav> -->
-
-
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<script src="/javascripts/userPosition.js"></script>
-<script src="/javascripts/bootstrap.js"></script>
-<script src="/javascripts/application.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script src="/javascripts/userPosition.js"></script>
 </body>
 </html>
